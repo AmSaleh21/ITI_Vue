@@ -7,8 +7,8 @@
     </div>
     <div class="container">
       <site-form @students="addStudent" @admins="addAdmin" v-if="choice === 'form'"/>
-      <students-table v-if="choice === 'students'" @delete="deleteStudent"/>
-      <admins-table v-if="choice === 'admins'" @delete="deleteAdmin"/>
+      <students-table v-if="choice === 'students'" @delete="deleteStudent" @update="updateStudent"/>
+      <admins-table v-if="choice === 'admins'" @delete="deleteAdmin" @update="updateAdmin"/>
     </div>
   </div>
 </template>
@@ -67,6 +67,14 @@ export default {
       this.admins.splice(index, 1)
       this.updateAdminsLS()
     },
+    updateStudent(student, index){
+      this.students.splice(index, 1, student)
+      this.updateStudentsLS()
+    },
+    updateAdmin(admin, index){
+      this.admins.splice(index, 1, admin)
+      this.updateAdminsLS()
+    }
   }
 }
 </script>

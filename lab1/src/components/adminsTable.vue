@@ -1,5 +1,6 @@
 <template>
   <p class="h3">Admins</p>
+  <update-popup v-if="showUpdatePopup" :updateObject="this.updateAdmin" @update="sendUpdateAndHide(updateAdmin, index)"/>
   <div>
     <table class="table table-striped table-dark table-hover">
       <thead>
@@ -18,7 +19,8 @@
         <td>{{ admin.age }}</td>
         <td>{{ admin.address }}</td>
         <td>
-          <button class="btn btn-danger" @click="$emit('delete', index)">Delete</button>
+          <button class="btn btn-danger mx-1" @click="$emit('delete', index)">Delete</button>
+          <button class="btn btn-info mx-1" @click="showUpdateForm(admin, index)">Update</button>
         </td>
       </tr>
       </tbody>
@@ -27,9 +29,29 @@
 </template>
 
 <script>
+import UpdatePopup from "@/components/updatePopup";
 export default {
   name: "adminsTable",
-  inject:['admins']
+  components: {UpdatePopup},
+  inject:['admins'],
+  data(){
+    return{
+      showUpdatePopup: false,
+      updateAdmin: [],
+      index: -1
+    }
+  },
+  methods: {
+    showUpdateForm(admin, index){
+      this.showUpdatePopup = true
+      this.updateAdmin = admin
+      this.index = index
+    },
+    sendUpdateAndHide(admin, index){
+      this.showUpdatePopup = false
+      this.$emit('update', admin, index)
+    }
+  }
 }
 </script>
 
