@@ -28,35 +28,45 @@ export default {
   },
   data() {
     return{
-      students: [],
-      admins: [],
+      students: JSON.parse(localStorage.getItem('students')) || [],
+      admins: JSON.parse(localStorage.getItem('admins')) || [],
       /***********************************************************************
        *                        sample                                       *
        *       students: [{name:'abdelrahman', age:26, address:'suez'}],     *
        *       admins: [{name:'saleh', age:26, address:'suez'}],             *
        ***********************************************************************/
-      choice: 'form'
+      choice: 'form',
     }
   },
-  provide(){
+  provide(){ //for table views (students & admins)
     return {
       students: this.students,
       admins: this.admins,
     }
   },
   methods: {
+    updateStudentsLS(){
+      localStorage.setItem('students', JSON.stringify(this.students))
+    },
+    updateAdminsLS(){
+      localStorage.setItem('admins', JSON.stringify(this.admins))
+    },
     addStudent(student) {
       this.students.push(student)
+      this.updateStudentsLS()
     },
     addAdmin(admin) {
       this.admins.push(admin)
+      this.updateAdminsLS()
     },
     deleteStudent(index){
       this.students.splice(index, 1)
+      this.updateStudentsLS()
     },
     deleteAdmin(index){
       this.admins.splice(index, 1)
-    }
+      this.updateAdminsLS()
+    },
   }
 }
 </script>
