@@ -1,5 +1,8 @@
 # lab1
 
+## description
+simple crud operations with (emits, props and local storage)
+
 ## Project setup
 ```
 npm install
