@@ -12,8 +12,11 @@
         created at : {{ post.createdAt }}
       </template>
       <template #footer>
-        <Button label="Details" class="p-button-sm">
+        <Button label="Details" class="p-button-sm mx-2">
           <router-link :to="`/post/${post.id}`" class="rLink">Details</router-link>
+        </Button>
+        <Button label="Delete" class="p-button-sm p-button-danger mx-2" @click="deletePost(post.id)">
+
         </Button>
       </template>
     </Card>
@@ -51,6 +54,10 @@ export default {
             }
           })
           .catch( err => console.log(err))
+    },
+    async deletePost(id) {
+      await axios
+          .delete(`http://localhost:3000/news/${id}`)
     }
   }
 }
