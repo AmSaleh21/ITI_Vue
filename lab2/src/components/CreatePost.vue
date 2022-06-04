@@ -21,8 +21,10 @@
         <span class="p-inputgroup-addon">
             <i class="pi pi-calendar"></i>
         </span>
-    <Calendar v-model="formPost.createdAt" selectionMode="single" dateFormat="dd/mm/yy"
-              :showButtonBar="true" :showIcon="false" placeholder="created at"/>
+    <Calendar v-model="date" selectionMode="single" dateFormat="dd/mm/yy"
+              :showButtonBar="true" :showIcon="false" placeholder="created at"
+              @date-select="selected"
+    />
     </div>
 
     <div class="p-inputgroup my-2">
@@ -59,15 +61,28 @@ export default {
         image: '',
         description: '',
       },
+      date : ''
     }
   },
+
   methods: {
     submit() {
       axios.post('http://localhost:3000/news', {
         ...this.formPost
       })
           .then(() => this.$router.push('/'))
-    }
+    },
+    selected() {
+      let today = this.date;
+      let yyyy = today.getFullYear();
+      let mm = today.getMonth() + 1; // Months start at 0!
+      let dd = today.getDate();
+
+      if (dd < 10) dd = '0' + dd;
+      if (mm < 10) mm = '0' + mm;
+
+      this.formPost.createdAt = mm + '/' + dd + '/' + yyyy;
+    },
   }
 }
 </script>
